@@ -1,0 +1,107 @@
+#include <stdio.h>
+
+void nivel1();
+void nivel2();
+void nivel3();
+
+int main() {
+    int escolha;
+
+    do {
+        printf("\n=== SUPER TRUNFO TECHNOVA ===\n");
+        printf("1 - Comparação simples (Nível 1)\n");
+        printf("2 - Comparação múltipla com menu (Nível 2)\n");
+        printf("3 - Comparação de dois atributos (Nível 3)\n");
+        printf("0 - Sair\n");
+        printf("Escolha o modo de jogo: ");
+        scanf("%d", &escolha);
+
+        switch (escolha) {
+            case 1: nivel1(); break;
+            case 2: nivel2(); break;
+            case 3: nivel3(); break;
+            case 0: printf("Saindo...\n"); break;
+            default: printf("Opção inválida.\n");
+        }
+    } while (escolha != 0);
+
+    return 0;
+}
+
+// Funções dos níveis:
+void nivel1() {
+    int forca1 = 80, forca2 = 90;
+
+    printf("\n[NÍVEL 1] Comparação Simples:\n");
+    if (forca1 > forca2)
+        printf("Carta 1 vence na Força!\n");
+    else if (forca2 > forca1)
+        printf("Carta 2 vence na Força!\n");
+    else
+        printf("Empate!\n");
+}
+
+void nivel2() {
+    int opcao;
+    int forca1 = 80, velocidade1 = 70, magia1 = 60;
+    int forca2 = 90, velocidade2 = 65, magia2 = 60;
+
+    printf("\n[NÍVEL 2] Comparação com Múltiplos Atributos\n");
+    printf("Escolha o atributo:\n1 - Força\n2 - Velocidade\n3 - Magia\n");
+    scanf("%d", &opcao);
+
+    switch (opcao) {
+        case 1:
+            if (forca1 > forca2)
+                printf("Carta 1 vence na Força!\n");
+            else if (forca2 > forca1)
+                printf("Carta 2 vence na Força!\n");
+            else
+                printf("Empate na Força!\n");
+            break;
+        case 2:
+            if (velocidade1 > velocidade2)
+                printf("Carta 1 vence na Velocidade!\n");
+            else if (velocidade2 > velocidade1)
+                printf("Carta 2 vence na Velocidade!\n");
+            else
+                printf("Empate na Velocidade!\n");
+            break;
+        case 3:
+            if (magia1 > magia2)
+                printf("Carta 1 vence na Magia!\n");
+            else if (magia2 > magia1)
+                printf("Carta 2 vence na Magia!\n");
+            else
+                printf("Empate na Magia!\n");
+            break;
+        default:
+            printf("Atributo inválido!\n");
+    }
+}
+
+void nivel3() {
+    int opcao1, opcao2;
+    int forca1 = 80, velocidade1 = 70, magia1 = 60;
+    int forca2 = 90, velocidade2 = 65, magia2 = 60;
+    int valor1 = 0, valor2 = 0;
+
+    printf("\n[NÍVEL 3] Comparação de Dois Atributos\n");
+    printf("Escolha dois atributos:\n1 - Força\n2 - Velocidade\n3 - Magia\n");
+
+    printf("Primeiro atributo: ");
+    scanf("%d", &opcao1);
+    printf("Segundo atributo: ");
+    scanf("%d", &opcao2);
+
+    // Carta 1
+    valor1 += (opcao1 == 1) ? forca1 : (opcao1 == 2) ? velocidade1 : (opcao1 == 3) ? magia1 : 0;
+    valor1 += (opcao2 == 1) ? forca1 : (opcao2 == 2) ? velocidade1 : (opcao2 == 3) ? magia1 : 0;
+
+    // Carta 2
+    valor2 += (opcao1 == 1) ? forca2 : (opcao1 == 2) ? velocidade2 : (opcao1 == 3) ? magia2 : 0;
+    valor2 += (opcao2 == 1) ? forca2 : (opcao2 == 2) ? velocidade2 : (opcao2 == 3) ? magia2 : 0;
+
+    printf("Resultado: %s\n", (valor1 > valor2) ? "Carta 1 vence!" :
+                              (valor2 > valor1) ? "Carta 2 vence!" : "Empate!");
+}
