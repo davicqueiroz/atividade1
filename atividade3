@@ -1,0 +1,114 @@
+#include <stdio.h>
+#include <string.h>
+
+#define TAM 8
+
+void imprimirTabuleiro(char tabuleiro[TAM][TAM]) {
+    printf("\nTabuleiro:\n");
+    for (int i = 0; i < TAM; i++) {
+        for (int j = 0; j < TAM; j++) {
+            printf("%2c ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void movimentosTorre(int x, int y) {
+    printf("\nMovimentos possíveis da Torre:\n");
+    for (int i = 0; i < TAM; i++) {
+        if (i != x)
+            printf("(%d, %d)\n", i, y); // Movimentos na vertical
+    }
+    for (int j = 0; j < TAM; j++) {
+        if (j != y)
+            printf("(%d, %d)\n", x, j); // Movimentos na horizontal
+    }
+}
+
+void movimentosBispo(int x, int y) {
+    printf("\nMovimentos possíveis do Bispo:\n");
+    for (int i = -TAM; i < TAM; i++) {
+        if (x + i >= 0 && x + i < TAM && y + i >= 0 && y + i < TAM && i != 0)
+            printf("(%d, %d)\n", x + i, y + i); // Diagonal principal
+        if (x + i >= 0 && x + i < TAM && y - i >= 0 && y - i < TAM && i != 0)
+            printf("(%d, %d)\n", x + i, y - i); // Diagonal secundária
+    }
+}
+
+void movimentosRainha(int x, int y) {
+    printf("\nMovimentos possíveis da Rainha:\n");
+    movimentosTorre(x, y);
+    movimentosBispo(x, y);
+}
+
+void movimentosCavalo(int x, int y) {
+    int dx[] = {-2, -1, 1, 2, 2, 1, -1, -2};
+    int dy[] = {1, 2, 2, 1, -1, -2, -2, -1};
+
+    printf("\nMovimentos possíveis do Cavalo:\n");
+    for (int i = 0; i < 8; i++) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+        if (nx >= 0 && nx < TAM && ny >= 0 && ny < TAM) {
+            printf("(%d, %d)\n", nx, ny);
+        }
+    }
+}
+
+int main() {
+    char tabuleiro[TAM][TAM];
+
+    // Inicializa o tabuleiro com '.'
+    for (int i = 0; i < TAM; i++) {
+        for (int j = 0; j < TAM; j++) {
+            tabuleiro[i][j] = '.';
+        }
+    }
+
+    // Coloca algumas peças só de exemplo
+    tabuleiro[0][0] = 'T'; // Torre
+    tabuleiro[2][2] = 'B'; // Bispo
+    tabuleiro[4][4] = 'Q'; // Rainha (Queen)
+    tabuleiro[5][5] = 'C'; // Cavalo
+
+    int linha, coluna;
+    char escolha;
+
+    imprimirTabuleiro(tabuleiro);
+
+    printf("\nEscolha a peça para movimentar:\n");
+    printf("T - Torre\nB - Bispo\nQ - Rainha\nC - Cavalo\n");
+    printf("Digite a letra da peça: ");
+    scanf(" %c", &escolha);
+
+    printf("Digite a linha (0 a 7): ");
+    scanf("%d", &linha);
+
+    printf("Digite a coluna (0 a 7): ");
+    scanf("%d", &coluna);
+
+    // Verifica se a posição tem a peça certa
+    if (tabuleiro[linha][coluna] != escolha) {
+        printf("\nErro: Não há essa peça na posição informada.\n");
+        return 0;
+    }
+
+    switch (escolha) {
+        case 'T':
+            movimentosTorre(linha, coluna);
+            break;
+        case 'B':
+            movimentosBispo(linha, coluna);
+            break;
+        case 'Q':
+            movimentosRainha(linha, coluna);
+            break;
+        case 'C':
+            movimentosCavalo(linha, coluna);
+            break;
+        default:
+            printf("Peça inválida.\n");
+    }
+
+    return 0;
+}
